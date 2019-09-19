@@ -2,7 +2,7 @@
 .SYNOPSIS
 IISLogsCleanup.ps1 - IIS Log File Cleanup Script
 
-.DESCRIPTION 
+.DESCRIPTION
 A PowerShell script to compress and archive IIS log files.
 
 This script will check the folder that you specify, and any files older
@@ -85,6 +85,7 @@ Change Log
 V1.00, 7/04/2014, Initial version
 V1.01, 8/08/2015, Fix for regional date format issues, Zip file locking issues.
 V1.02, 25/08/2015, Fixed typo in a variable
+V1.03, 19/09/2019, Fix typo error on cosmetic report headers
 #>
 
 
@@ -194,7 +195,7 @@ $timestamp = Get-Date -DisplayHint Time
 "$timestamp $logstring0" | Out-File $output
 Write-Logfile $logstring1
 Write-Logfile "  $now"
-Write-Logfile $logstring0w
+Write-Logfile $logstring0
 
 
 #Check whether IIS Logs path exists, exit if it does not
@@ -257,7 +258,7 @@ foreach ($date in $dates)
     if(-not (test-path($zipfilename)))
     {
         set-content $zipfilename ("PK" + [char]5 + [char]6 + ("$([char]0)" * 18))
-        (dir $zipfilename).IsReadOnly = $false 
+        (dir $zipfilename).IsReadOnly = $false
     }
 
     $shellApplication = new-object -com shell.application
@@ -269,10 +270,10 @@ foreach ($date in $dates)
     Write-Host $tmpstring
     Write-Logfile $tmpstring
 
-    foreach($file in $zipfiles) 
-    { 
+    foreach($file in $zipfiles)
+    {
         $fn = $file.key.ToString()
-        
+
         $tmpstring = "Adding $fn to $zipfilename"
         Write-Host $tmpstring
         Write-Logfile $tmpstring
@@ -290,11 +291,11 @@ foreach ($date in $dates)
 
     #Compare count of log files on disk to count of log files in zip file
     $zippedcount = ($zipPackage.Items()).Count
-    
+
     $tmpstring = "Zipped count: $zippedcount"
     Write-Host $tmpstring
     Write-Logfile $tmpstring
-    
+
     $tmpstring = "Files: $($zipfiles.Count)"
     Write-Host $tmpstring
     Write-Logfile $tmpstring
@@ -305,8 +306,8 @@ foreach ($date in $dates)
         $tmpstring = "Zipped file count matches log file count, safe to delete log files"
         Write-Host $tmpstring
         Write-Logfile $tmpstring
-        foreach($file in $zipfiles) 
-        { 
+        foreach($file in $zipfiles)
+        {
             $fn = $file.key.ToString()
             Remove-Item $fn
         }
@@ -326,7 +327,7 @@ foreach ($date in $dates)
                 #Check if subfolder of archive path exists
                 if ((Test-Path $ArchivePath\$computername) -ne $true)
                 {
-                    try 
+                    try
                     {
                         #Create subfolder based on server name
                         New-Item -Path $ArchivePath\$computername -ItemType Directory -ErrorAction STOP
@@ -365,7 +366,7 @@ foreach ($date in $dates)
                 }
 
                 #Now move the zip file to the archive path
-                try 
+                try
                 {
                     #Move the zip file
                     Move-Item $zipfilename -Destination $ArchivePath\$computername\$logpathfoldername -ErrorAction STOP
@@ -381,7 +382,7 @@ foreach ($date in $dates)
                     Write-Logfile $tmpstring
                     Write-Warning $_.Exception.Message
                     Write-Logfile $_.Exception.Message
-                }   
+                }
             }
         }
 
