@@ -86,6 +86,7 @@ V1.00, 7/04/2014, Initial version
 V1.01, 8/08/2015, Fix for regional date format issues, Zip file locking issues.
 V1.02, 25/08/2015, Fixed typo in a variable
 V1.03, 19/09/2019, Fix typo error on cosmetic report headers
+V1.04, 20/09/2019, fix date commpute for firstdayofmonth and change to LastWriteTime as criteria for files
 #>
 
 
