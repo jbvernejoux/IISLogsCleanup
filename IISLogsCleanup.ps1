@@ -107,7 +107,7 @@ $sleepinterval = 5
 
 $computername = $env:computername
 
-$now = Get-Date
+$now = (Get-Date).Date
 $currentmonth = ($now).Month
 $currentyear = ($now).Year
 $previousmonth = ((Get-Date).AddMonths(-1)).Month
@@ -191,10 +191,11 @@ function IsFileLocked( [string]$path)
 #Log file is overwritten each time the script is run to avoid
 #very large log files from growing over time
 
+$today = Get-Date
 $timestamp = Get-Date -DisplayHint Time
 "$timestamp $logstring0" | Out-File $output
 Write-Logfile $logstring1
-Write-Logfile "  $now"
+Write-Logfile "  $today"
 Write-Logfile $logstring0
 
 
@@ -221,7 +222,8 @@ Write-Host $tmpstring
 Write-Logfile $tmpstring
 
 #Fetch list of log files older than 1st day of previous month
-$logstoremove = Get-ChildItem -Path "$($Logpath)\*.*" -Include *.log | Where {$_.CreationTime -lt $firstdayofpreviousmonth -and $_.PSIsContainer -eq $false}
+## $logstoremove = Get-ChildItem -Path "$($Logpath)\*.*" -Include *.log | Where {$_.CreationTime -lt $firstdayofpreviousmonth -and $_.PSIsContainer -eq $false}
+$logstoremove = Get-ChildItem -Path "$($Logpath)\*.*" -Include *.log | Where {$_.LastWriteTime -lt $firstdayofpreviousmonth -and $_.PSIsContainer -eq $false}
 
 if ($($logstoremove.Count) -eq $null)
 {
