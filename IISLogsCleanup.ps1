@@ -88,6 +88,7 @@ V1.02, 25/08/2015, Fixed typo in a variable
 V1.03, 19/09/2019, Fix typo error on cosmetic report headers
 V1.04, 20/09/2019, fix date commpute for firstdayofmonth at midnight
 V1.05, 20/09/2019, change to LastWriteTime as criteria for files instead of CreateTime
+V1.06, 20/09/2019, change to sort files in the zip archive
 #>
 
 
