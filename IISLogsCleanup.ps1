@@ -85,6 +85,7 @@ Change Log
 V1.00, 7/04/2014, Initial version
 V1.01, 8/08/2015, Fix for regional date format issues, Zip file locking issues.
 V1.02, 25/08/2015, Fixed typo in a variable
+# Jbv changelog
 V1.03, 19/09/2019, Fix typo error on cosmetic report headers
 V1.04, 20/09/2019, fix date commpute for firstdayofmonth at midnight
 V1.05, 20/09/2019, change to LastWriteTime as criteria for files instead of CreateTime
