@@ -107,11 +107,12 @@ $sleepinterval = 5
 
 $computername = $env:computername
 
-$now = (Get-Date).Date
+$now = Get-Date
 $currentmonth = ($now).Month
 $currentyear = ($now).Year
-$previousmonth = ((Get-Date).AddMonths(-1)).Month
-$firstdayofpreviousmonth = (Get-Date -Year $currentyear -Month $currentmonth -Day 1).AddMonths(-1)
+$previousmonth = (($now).AddMonths(-1)).Month
+## appended with .Date to enforce 00:00:00 as time for firstdayofpreviousmonth
+$firstdayofpreviousmonth = (Get-Date -Year $currentyear -Month $currentmonth -Day 1).AddMonths(-1).Date
 
 $myDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $output = "$myDir\IISLogsCleanup.log"
