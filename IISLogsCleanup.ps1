@@ -86,7 +86,8 @@ V1.00, 7/04/2014, Initial version
 V1.01, 8/08/2015, Fix for regional date format issues, Zip file locking issues.
 V1.02, 25/08/2015, Fixed typo in a variable
 V1.03, 19/09/2019, Fix typo error on cosmetic report headers
-V1.04, 20/09/2019, fix date commpute for firstdayofmonth and change to LastWriteTime as criteria for files
+V1.04, 20/09/2019, fix date commpute for firstdayofmonth at midnight
+V1.05, 20/09/2019, change to LastWriteTime as criteria for files instead of CreateTime
 #>
 
 
@@ -268,7 +269,9 @@ foreach ($date in $dates)
     $shellApplication = new-object -com shell.application
     $zipPackage = $shellApplication.NameSpace($zipfilename)
 
-    $zipfiles = $hashtable | Where {$_.Value -eq "$($date.Name)"}
+    ## changes in $zipfiles to sort files by name
+    $UnSortedZipfiles = $hashtable | Where {$_.Value -eq "$($date.Name)"}
+    $zipfiles = $UnSortedZipfiles.GetEnumerator() | Sort-Object -Property Key
 
     $tmpstring = "Zip file name is $zipfilename and will contain $($zipfiles.Count) files"
     Write-Host $tmpstring
