@@ -224,8 +224,7 @@ $tmpstring = "First Day of Previous Month: $firstdayofpreviousmonth"
 Write-Host $tmpstring
 Write-Logfile $tmpstring
 
-#Fetch list of log files older than 1st day of previous month
-## $logstoremove = Get-ChildItem -Path "$($Logpath)\*.*" -Include *.log | Where {$_.CreationTime -lt $firstdayofpreviousmonth -and $_.PSIsContainer -eq $false}
+#Fetch list of log files older than 1st day of previous month, based on last modification datetime
 $logstoremove = Get-ChildItem -Path "$($Logpath)\*.*" -Include *.log | Where {$_.LastWriteTime -lt $firstdayofpreviousmonth -and $_.PSIsContainer -eq $false}
 
 if ($($logstoremove.Count) -eq $null)
