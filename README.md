@@ -1,4 +1,4 @@
-Forked from the original author to implement changes written in comments of the Paul Cunningham's blog. 
+Forked from the original author only to implement changes written/suggested in comments of the Paul Cunningham's blog. 
 Thanks to Paul Cunningham.
 
 No more changes than these (from the comments section of the script) :
